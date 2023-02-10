@@ -1,8 +1,23 @@
 package practica1;
 
+/**
+ * 
+ * Clase que crea el catalogo a administrar y contiene todos los metodos necesarios para la administracion de la
+ * base de datos dicho catalogo.
+ * 
+ * @author Miguel Lopez Rodriguez
+ *
+ */
+
 public class Administrador {
 
 	private static Catalogo catalogo = new Catalogo();
+
+	/**
+	 * Metodo central de la interfaz, llamado desde la clase ejecutable, desde el
+	 * cual se accede al resto de funciones de 'Administrador'.
+	 * 
+	 */
 
 	public static void administrarCatalogo() {
 		int opcionMenu;
@@ -45,6 +60,13 @@ public class Administrador {
 		System.out.println("Hasta Pronto!");
 	}
 
+	/**
+	 * Busca una posicion libre en memoria. Si la encuentra, llama al metodo
+	 * "introducirDatos()", al que pasa dicha posicion. Si no, lo hace saber al
+	 * usuario.
+	 * 
+	 */
+
 	private static void crearRegistro() {
 		int contador = 0;
 		boolean encontrado = false;
@@ -63,6 +85,13 @@ public class Administrador {
 		}
 	}
 
+	/**
+	 * Busca el/los registros indicados por el usuario y llama al metodo
+	 * 'informarSobreProducto()' de la clase Catalogo, al que pasa la posicion en
+	 * memoria de dichos registros.
+	 * 
+	 */
+
 	private static void consultarRegistro() {
 		int[] indices;
 		System.out.println("Busque el/los registro/s que desea consultar.");
@@ -75,6 +104,14 @@ public class Administrador {
 		}
 
 	}
+
+	/**
+	 * 
+	 * Obtiene las posiciones en memoria de los registros que el usuario desea
+	 * modificar, pregunta al usuario los datos sobre el producto que desea
+	 * modificar, y llama al metodo 'introducirDatos()', al que pasa estos datos.
+	 * 
+	 */
 
 	private static void actualizarRegistro() {
 		int[] indices;
@@ -94,6 +131,13 @@ public class Administrador {
 		}
 	}
 
+	/**
+	 * 
+	 * Llama a los metodos necesarios para encontrar los indices de los registros
+	 * indicados por el usuario y los elimina.
+	 * 
+	 */
+
 	private static void eliminarRegistro() {
 		int[] indices;
 		System.out.println("Busque el registro que desea eliminar.");
@@ -111,11 +155,24 @@ public class Administrador {
 		}
 	}
 
+	/**
+	 * 
+	 * Usado para la creacion de nuevos productos, llama a los metodos necesarios de
+	 * la clase Catalogo para introducir todos los datos del producto pasados por el
+	 * usuario en la posicion libre en memoria indicada.
+	 * 
+	 * @param indice posicion libre en memoria en la que se insertaran los datos
+	 *               introducidos por el usuario.
+	 * 
+	 */
+
 	private static void introducirDatos(int indice) {
 		String nombreProducto;
 
 		do {
 			nombreProducto = Utilidades.pedirString("Introduzca el nombre del nuevo producto.");
+
+			// Convierte en mayuscula la primera letra de la cadena de texto introducida
 
 			if (nombreProducto.length() > 0) {
 				nombreProducto = nombreProducto.toUpperCase().charAt(0)
@@ -135,12 +192,27 @@ public class Administrador {
 		System.out.println("Datos introducidos con exito.");
 	}
 
+	/**
+	 * Usado para la modificacion de productos existentes, llama a los metodos
+	 * necesarios de la clase Catalogo para introducir en uno o todos los campos los
+	 * nuevos datos del producto pasados por el usuario en la posicion libre en
+	 * memoria
+	 * 
+	 * @param indice    posicion libre en la base de datos en la que se insertaran
+	 *                  los datos introducidos por el usuario.
+	 * 
+	 * @param operacion numero entero entre 1 y 4 que indica los campos de la base
+	 *                  de datos a modificar.
+	 */
+
 	private static void introducirDatos(int indice, int operacion) {
 		String nombreProducto;
 
 		if (operacion == 1 || operacion == 4) {
 			do {
 				nombreProducto = Utilidades.pedirString("Introduzca el nuevo nombre del producto.");
+
+				// Convierte en mayuscula la primera letra de la cadena de texto introducida
 
 				nombreProducto = nombreProducto.toUpperCase().charAt(0)
 						+ nombreProducto.substring(1, nombreProducto.length());
@@ -162,9 +234,22 @@ public class Administrador {
 		System.out.println("Datos introducidos con exito.");
 	}
 
+	/**
+	 * Permite al usuario escoger un criterio de busqueda y llama a los metodos de
+	 * busqueda pertinentes en funcion de dicho criterio
+	 * 
+	 * @return array con los indices de los registros buscados por el usuario
+	 */
+
 	private static int[] menuBusqueda() {
 		int criterioBusqueda;
 		int[] indices = new int[catalogo.getCantidadProductos()];
+
+		//
+		// Para todos los metodos de busqueda:
+		// -1 = posicion en memoria por defecto => no existen coincidencias de busqueda
+		// o los resultados no han llegado a ocupar esa posicion
+		// (no hay tantos resultados como espacio tiene el array).
 
 		for (int i = 0; i < indices.length; i++) {
 			indices[i] = -1;
@@ -199,6 +284,21 @@ public class Administrador {
 		return indices;
 	}
 
+	/**
+	 * En funcion de la modalidad de busqueda: 1- pide al usuario el indice asociado
+	 * a un registro, busca y retorna la posicion en memoria del mismo; 2 - pide al
+	 * usuario que establezca un rango de indices, busca y retorna las posiciones en
+	 * meoria de los registros cuyos indices estan comprendidos en ese rango; 3 -
+	 * Busca el registro con el indice mayor y retorna su posicion en memoria; 4 -
+	 * Busca el registro con el indice menor y retorna su posicion en memoria. En
+	 * caso de no encontrar coindicencias lo hace saber al usuario.
+	 * 
+	 * @param modalidadBusqueda numero entero entre 1 y 4 que indica la modalidad de
+	 *                          busqueda elegida por el usuario
+	 * @return array con las posiciones en memoria de los registros buscados por el
+	 *         usuario, o vacio en caso de no encontrar coincidencias.
+	 */
+
 	private static int[] buscarPorId(int modalidadBusqueda) {
 		int idProducto;
 		int idMasAlto;
@@ -207,6 +307,8 @@ public class Administrador {
 		boolean encontrado = false;
 		int contador = 0;
 		int[] corrector = new int[2];
+
+		// Buscar dato concreto
 
 		if (modalidadBusqueda == 1) {
 
@@ -223,8 +325,12 @@ public class Administrador {
 			indices[0] = idProducto - 1;
 			return indices;
 
+			// Buscar por rango
+
 		} else if (modalidadBusqueda == 2) {
 			indices = new int[catalogo.getCantidadProductos()];
+
+			// Todas las posiciones sin resultados por defecto
 
 			for (int i = 0; i < indices.length; i++) {
 				indices[i] = -1;
@@ -244,9 +350,13 @@ public class Administrador {
 
 			} while (idMasAlto == idMasBajo);
 
+			// Intercambia los valores de las variables si es necesario
+
 			corrector = Utilidades.correctorMayorMenor(idMasAlto, idMasBajo);
 			idMasAlto = corrector[0];
 			idMasBajo = corrector[1];
+
+			// Buscar productos con identificadores en rango
 			
 			for (int i = idMasBajo - 1; i < idMasAlto; i++) {
 				if (catalogo.getNombresProductos()[i] != null) {
@@ -256,12 +366,16 @@ public class Administrador {
 				}
 			}
 
+			// Advertir inexistencia de productos con identificadores en rango
+
 			if (!encontrado) {
 				System.out.println(
 						"Lo siento, pero no existen registros cuyos identificadores se encuentren comprendidos entre ese rango.");
 			}
 
 			return indices;
+
+			// Buscar id mas alto (solo uno)
 
 		} else if (modalidadBusqueda == 3) {
 			indices = new int[1];
@@ -277,6 +391,8 @@ public class Administrador {
 			}
 
 			return indices;
+
+			// Buscar id mas bajo (solo uno)
 
 		} else {
 			indices = new int[1];
@@ -296,17 +412,32 @@ public class Administrador {
 		}
 	}
 
+	/**
+	 * Busca el registro cuyo nombre coincida con el indicado por el usuario y
+	 * retorna la posicion en memoria del mismo. En caso de no encontrar
+	 * coincidencias, lo hace saber.
+	 * 
+	 * @return numero entero que representa la posicion en memoria del registro
+	 *         buscado por el usuario
+	 */
+
 	private static int buscarPorNombre() {
 		String nombreProducto;
 		int contador = 0;
 		boolean encontrado = false;
 		
+		// Pide y valida el nombre a buscar
+
 		do {
 			nombreProducto = Utilidades.pedirString("Introduzca el nombre del producto que desea buscar.");
+
+			// Convierte en mayuscula la primera letra de la cadena de texto introducida
 
 			nombreProducto = nombreProducto.toUpperCase().charAt(0)
 					+ nombreProducto.substring(1, nombreProducto.length());
 		} while (!Utilidades.validarNombre(catalogo, nombreProducto));
+
+		// Busca el producto con el nombre indicado 
 		
 		do {
 			if (catalogo.getNombresProductos()[contador] != null) {
@@ -328,6 +459,22 @@ public class Administrador {
 		return -1;
 	}
 
+	/**
+	 * En funcion de la modalidad de busqueda: 1- pide al usuario el precio asociado
+	 * a uno o varios registros, busca y retorna sus posiciones en memoria; 2 - pide
+	 * al usuario que establezca un rango de precios, busca y retorna las posiciones
+	 * en memoria de los registgros comprendidos en ese rango; 3 - Busca y retorna
+	 * la posicion en memoria del registro con el precio mas alto -uno o varios-; 4
+	 * - Busca y retorna la posicion en memoria del registro con el precio mas bajo
+	 * -uno o varios-. En caso de no encontrar coindicencias lo hace saber al
+	 * usuario.
+	 * 
+	 * @param modalidadBusqueda numero entero entre 1 y 4 que indica la modalidad de
+	 *                          busqueda elegida por el usuario
+	 * @return array con los indices de los registros buscados por el usuario o
+	 *         vacio en caso de no encontrar coincidencias.
+	 */
+
 	private static int[] buscarPorPrecio(int modalidadBusqueda) {
 		double precioProducto;
 		double precioMaximo;
@@ -337,6 +484,8 @@ public class Administrador {
 		int contador = 0;
 		double[] corrector = new double[2];
 		double comparador;
+
+		// Buscar dato concreto
 
 		if (modalidadBusqueda == 1) {
 			indices = new int[1];
@@ -359,8 +508,12 @@ public class Administrador {
 			}
 			return indices;
 
+			// Buscar por rango
+
 		} else if (modalidadBusqueda == 2) {
 			indices = new int[catalogo.getCantidadProductos()];
+
+			// Sin resultados en ninguna posicion por defecto
 
 			for (int i = 0; i < indices.length; i++) {
 				indices[i] = -1;
@@ -374,10 +527,14 @@ public class Administrador {
 				}
 			} while (precioMaximo == precioMinimo);
 
+			// Intercambiar valores si es necesario
+
 			corrector = Utilidades.correctorMayorMenor(precioMaximo, precioMinimo);
 			precioMaximo = corrector[0];
 			precioMinimo = corrector[1];
 			
+			// Buscar indices de productos con precio en rango
+
 			for (int i = 0; i < catalogo.getCantidadProductos(); i++) {
 				if (catalogo.getPreciosProductos()[i] >= precioMinimo
 						&& catalogo.getPreciosProductos()[i] <= precioMaximo) {
@@ -386,14 +543,20 @@ public class Administrador {
 					contador++;
 				}
 			}
+
+			// Advertir inexistencia de productos con precio en rango
 			
 			if (!encontrado) {
 				System.out.println("Lo siento, pero no existe ningun producto cuyo precio se situe en ese rango.");
 				return indices;
 			}
 
+			// Buscar precio mas alto (Puede haber varios resultados)
+
 		} else if (modalidadBusqueda == 3) {
 			indices = new int[catalogo.getCantidadProductos()];
+
+			// Sin resultados en ninguna posicion por defecto
 
 			for (int i = 0; i < catalogo.getCantidadProductos(); i++) {
 				indices[i] = -1;
@@ -420,6 +583,8 @@ public class Administrador {
 			}
 
 			return indices;
+
+			// Buscar precio mas bajo (Puede haber varios resultados)
 
 		} else {
 			indices = new int[catalogo.getCantidadProductos()];
@@ -451,6 +616,23 @@ public class Administrador {
 		return indices;
 	}
 
+	/**
+	 * En funcion de la modalidad de busqueda: 1- pide al usuario el numero de
+	 * unidades disponibles asociado a uno o varios registros, busca y retorna sus
+	 * posiciones en memoria; 2 - pide al usuario que establezca un rango de
+	 * unidades disponibles, busca y retorna las posiciones en memoria de los
+	 * registgros comprendidos en ese rango; 3 - Busca y retorna la posicion en
+	 * memoria del registro con el numero mas alto de unidades disponibles -uno o
+	 * varios-; 4 - Busca y retorna la posicion en memoria del registro con el
+	 * numero mas bajo de unidades - uno o varios-. En caso de no encontrar
+	 * coindicencias lo hace saber al usuario.
+	 * 
+	 * @param modalidadBusqueda numero entero entre 1 y 4 que indica la modalidad de
+	 *                          busqueda elegida por el usuario
+	 * @return array con los indices de los registros buscados por el usuario o
+	 *         vacio en caso de no encontrar coincidencias.
+	 */
+
 	private static int[] buscarPorUnidades(int modalidadBusqueda) {
 		int unidades;
 		int maximoUnidades;
@@ -460,6 +642,8 @@ public class Administrador {
 		int contador = 0;
 		int[] corrector = new int[2];
 		int comparador;
+
+		// Buscar un dato concreto
 
 		if (modalidadBusqueda == 1) {
 			indices = new int[1];
@@ -483,8 +667,12 @@ public class Administrador {
 			}
 			return indices;
 
+			// Buscar por rango
+
 		} else if (modalidadBusqueda == 2) {
 			indices = new int[catalogo.getCantidadProductos()];
+
+			// Sin resultados en ninguna posicion por defecto
 
 			for (int i = 0; i < indices.length; i++) {
 				indices[i] = -1;
@@ -500,9 +688,13 @@ public class Administrador {
 				}
 			} while (maximoUnidades == minimoUnidades);
 
+			// Intercambia los valores si es encesario
+
 			corrector = Utilidades.correctorMayorMenor(maximoUnidades, minimoUnidades);
 			maximoUnidades = corrector[0];
 			minimoUnidades = corrector[1];
+
+			// Buscar indices de productos con numero de unidades disponibles en rango
 			
 			for (int i = 0; i < catalogo.getCantidadProductos(); i++) {
 				if (catalogo.getUnidadesProductos()[i] >= minimoUnidades
@@ -512,6 +704,8 @@ public class Administrador {
 					contador++;
 				}
 			}
+
+			// Advertir inexistencia de productos con numero de unidades disponibles en rango
 			
 			if (!encontrado) {
 				System.out.println("Lo siento, pero no existe ningun producto cuyo precio se situe en ese rango.");
@@ -519,8 +713,12 @@ public class Administrador {
 			}
 			return indices;
 
+			// Buscar numero mas alto de unidades (Puede haber varios resultados)
+
 		} else if (modalidadBusqueda == 3) {
 			indices = new int[catalogo.getCantidadProductos()];
+
+			// Sin resultados en ninguna posicion por defecto
 
 			for (int i = 0; i < catalogo.getCantidadProductos(); i++) {
 				indices[i] = -1;
@@ -548,8 +746,12 @@ public class Administrador {
 
 			return indices;
 
+			// Buscar el numero mas bajo de unidades (Puede haber varios resultados)
+
 		} else {
 			indices = new int[catalogo.getCantidadProductos()];
+
+			// Sin resultados en ninguna posicion por defecto
 
 			for (int i = 0; i < catalogo.getCantidadProductos(); i++) {
 				indices[i] = -1;
@@ -578,6 +780,14 @@ public class Administrador {
 		return indices;
 	}
 
+	/**
+	 * Busca todos los registros de la base de datos y retorna sus posiciones en
+	 * memoria.
+	 * 
+	 * @return array con las posiciones en memoria de todos los registros
+	 *         disponibles en la base de datos
+	 */
+
 	public static int[] mostrarTodo() {
 		int contador = 0;
 		int[] indices = new int[catalogo.getCantidadProductos()];
@@ -594,6 +804,17 @@ public class Administrador {
 		}
 		return indices;
 	}
+
+	/**
+	 * Permite al usuario escoger una modalidad de busqueda - dato concreto, rango,
+	 * dato mas alto, dato mas bajo- para sus busquedas por id, precio o unidades
+	 * disponibles.
+	 * 
+	 * @param criterioBusqueda numero entero que representa la opcion de busqueda
+	 *                         del usuario -id, precio o unidades-.
+	 * @return numero entero que establece la modalidad de busqeuda elegida por el
+	 *         usuario.
+	 */
 
 	private static int modalidadBusqueda(int criterioBusqueda) {
 		int opcionBusqueda = 0;
@@ -613,4 +834,3 @@ public class Administrador {
 		return opcionBusqueda;
 	}
 }
-

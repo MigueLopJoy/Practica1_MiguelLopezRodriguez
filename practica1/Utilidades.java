@@ -2,7 +2,23 @@ package practica1;
 
 import java.util.Scanner;
 
+/**
+ * 
+ * Clase que contiene metodos auxiliares necesarios para los procesos vinculados
+ * con la administracion del catalogo.
+ * 
+ * @author Miguel Lopez Rodriguez
+ *
+ */
+
 public class Utilidades {
+
+	/**
+	 * Permite saber si hay o no registros en el catalogo
+	 * 
+	 * @param catalogo Catalogo que se esta administrando
+	 * @return booleano que indica si el catalogo esta o no vacio
+	 */
 
 	public static boolean hayRegistros(Catalogo catalogo) {
 		boolean encontrado = false;
@@ -23,6 +39,16 @@ public class Utilidades {
 		}
 	}
 
+	/**
+	 * Utilizado en procesos de busqueda, comprueba si el dato introducido por el
+	 * usuario es un nombre valido
+	 * 
+	 * @param catalogo       que se esta administrando
+	 * @param nombreProducto nombre que el usuario pretende asignar a un producto en
+	 *                       un registro
+	 * @return
+	 */
+
 	public static boolean validarNombre(Catalogo catalogo, String nombreProducto) {
 		int contador = 0;
 		boolean encontrado = false;
@@ -39,6 +65,18 @@ public class Utilidades {
 			return true;
 		}
 	}
+
+	/**
+	 * Utilizado en procesos de insercion de datos, comprueba si el dato introducido
+	 * es un nombre valido y si ese nombre no se encuentra ya asignado a un producto
+	 * existente en la base de datos
+	 * 
+	 * @param catalogo       Catalogo que se esta administrando
+	 * @param nombreProducto nombre que el usuario pretende asignar a un producto en
+	 *                       un registro
+	 * @param indice
+	 * @return
+	 */
 
 	public static boolean validarNombre(Catalogo catalogo, String nombreProducto, int indice) {
 		int contador = 0;
@@ -76,6 +114,13 @@ public class Utilidades {
 		}
 	}
 
+	/**
+	 * Pide al usuario un numero entero y valida el dato introducido
+	 * 
+	 * @param texto Texto a mostrar al usuario
+	 * @return numero entero dado por el ususario
+	 */
+
 	public static int pedirInt(String texto) {
 		int retorno;
 		String retornoString;
@@ -96,6 +141,14 @@ public class Utilidades {
 		} while (!inputValido);
 		return retorno;
 	}
+
+	/**
+	 * Pide al usuario un numero entero comprendido en un rango y valida el dato
+	 * introducido
+	 * 
+	 * @param texto Texto a mostrar al usuario
+	 * @return numero entero dado por el ususario
+	 */
 
 	public static int pedirInt(String texto, int min, int max) {
 		int retorno;
@@ -123,6 +176,13 @@ public class Utilidades {
 		return retorno;
 	}
 
+	/**
+	 * Pide al usuario un numero decimal y valida el dato introducido
+	 * 
+	 * @param texto Texto a mostrar al usuario
+	 * @return numero decimal dado por el ususario
+	 */
+
 	public static double pedirDouble(String texto) {
 		double retorno;
 		Scanner scanner = new Scanner(System.in);
@@ -131,6 +191,14 @@ public class Utilidades {
 		scanner.nextLine();
 		return retorno;
 	}
+
+	/**
+	 * Pide al usuario un numero decimal entre un rango determinado y valida el dato
+	 * introducido
+	 * 
+	 * @param texto Texto a mostrar al usuario
+	 * @return numero decimal dado por el ususario
+	 */
 
 	public static double pedirDouble(String texto, double min, double max) {
 		double retorno;
@@ -156,6 +224,13 @@ public class Utilidades {
 		return retorno;
 	}
 
+	/**
+	 * Pide al usuario una cadena de texto
+	 * 
+	 * @param texto Texto a mostrar al usuario
+	 * @return cadena de texto dada por el ususario
+	 */
+
 	public static String pedirString(String texto) {
 		String retorno;
 		Scanner scanner = new Scanner(System.in);
@@ -163,6 +238,14 @@ public class Utilidades {
 		retorno = scanner.nextLine();
 		return retorno;
 	}
+
+	/**
+	 * Pide al usuario una confirmacion sobre una accion dada
+	 * 
+	 * @param texto Texto a mostrar al usuario
+	 * @return la confirmacion o no confirmacion del usuario
+	 * 
+	 */
 
 	public static boolean confirmacion(String texto) {
 		char confirmacion;
@@ -178,6 +261,16 @@ public class Utilidades {
 		return false;
 	}
 
+	/**
+	 * Asegura que se cumple una relacion 'numero mayor > numero menor' entre dos
+	 * numeros enteros, intercambiando los valores de las variables si fuera
+	 * necesario
+	 * 
+	 * @param max Numero entero que deberia ser mayor
+	 * @param min Numero entero que deberia ser menor
+	 * @return array con los numeros mayor y menor corregidos
+	 */	
+
 	public static int[] correctorMayorMenor(int max, int min) {
 		int[] retorno = new int[2];
 		int corrector;
@@ -190,6 +283,16 @@ public class Utilidades {
 		retorno[1] = min;
 		return retorno;
 	}
+
+	/**
+	 * Asegura que se cumple una relacion 'numero mayor > numero menor' entre dos
+	 * numeros decimales, intercambiando los valores de las variables si fuera
+	 * necesario
+	 * 
+	 * @param max Numero decimal que deberia ser mayor
+	 * @param min Numero decimal que deberia ser menor
+	 * @return array con los numeros mayor y menor corregidos
+	 */
 
 	public static double[] correctorMayorMenor(double max, double min) {
 		double[] retorno = new double[2];
@@ -204,6 +307,14 @@ public class Utilidades {
 		return retorno;
 	}
 
+	/**
+	 * Compara dos numeros entero y devuelve el mayor
+	 * 
+	 * @param numero1 Numero entero a comparar
+	 * @param numero2 Numero entero a comparar
+	 * @return Numero mayor
+	 */
+
 	public static int devolverMayor(int numero1, int numero2) {
 		int numeroMenor;
 		if (numero1 != numero2) {
@@ -213,6 +324,14 @@ public class Utilidades {
 		}
 		return numeroMenor;
 	}
+
+	/**
+	 * Compara dos numeros enteros y devuelve el menor
+	 * 
+	 * @param numero1 Numero entero a comparar
+	 * @param numero2 Numero entero a comparar
+	 * @return Numero menor
+	 */
 
 	public static int devolverMenor(int numero1, int numero2) {
 		int numeroMenor;
@@ -224,6 +343,14 @@ public class Utilidades {
 		return numeroMenor;
 	}
 
+	/**
+	 * Compara dos numeros decimales y devuelve el mayor
+	 * 
+	 * @param numero1 Numero decimal a comparar
+	 * @param numero2 Numero decimal a comparar
+	 * @return Numero mayor
+	 */
+
 	public static double devolverMayor(double numero1, double numero2) {
 		double numeroMenor;
 		if (numero1 != numero2) {
@@ -233,6 +360,14 @@ public class Utilidades {
 		}
 		return numeroMenor;
 	}
+
+	/**
+	 * Compara dos numeros decimales y devuelve el menor
+	 * 
+	 * @param numero1 Numero decimal a comparar
+	 * @param numero2 Numero decimal a comparar
+	 * @return Numero menor
+	 */
 
 	public static double devolverMenor(double numero1, double numero2) {
 		double numeroMenor;
@@ -244,4 +379,5 @@ public class Utilidades {
 		return numeroMenor;
 	}
 }
+
 
