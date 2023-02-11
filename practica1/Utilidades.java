@@ -46,7 +46,7 @@ public class Utilidades {
 	 * @param catalogo       que se esta administrando
 	 * @param nombreProducto nombre que el usuario pretende asignar a un producto en
 	 *                       un registro
-	 * @return
+	 * @return verdadera si es un nombre válido, false si no
 	 */
 
 	public static boolean validarNombre(Catalogo catalogo, String nombreProducto) {
@@ -74,8 +74,8 @@ public class Utilidades {
 	 * @param catalogo       Catalogo que se esta administrando
 	 * @param nombreProducto nombre que el usuario pretende asignar a un producto en
 	 *                       un registro
-	 * @param indice
-	 * @return
+	 * @param indice indice en el que se pretende insertar el nombre
+	 * @return true si es un nombre válido, false si no
 	 */
 
 	public static boolean validarNombre(Catalogo catalogo, String nombreProducto, int indice) {
@@ -147,6 +147,8 @@ public class Utilidades {
 	 * introducido
 	 * 
 	 * @param texto Texto a mostrar al usuario
+	 * @param min Límite inferior del rango en el que debe situarse el número que se solicita
+	 * @param max Límite superior del rango en el que debe situarse el número que se solicita
 	 * @return numero entero dado por el ususario
 	 */
 
@@ -197,6 +199,8 @@ public class Utilidades {
 	 * introducido
 	 * 
 	 * @param texto Texto a mostrar al usuario
+	 * @param min Límite inferior del rango en el que debe situarse el número que se solicita
+	 * @param max Límite superior del rango en el que debe situarse el número que se solicita
 	 * @return numero decimal dado por el ususario
 	 */
 
@@ -262,7 +266,7 @@ public class Utilidades {
 	}
 
 	/**
-	 * Asegura que se cumple una relacion 'numero mayor > numero menor' entre dos
+	 * Asegura que se cumple una relacion 'numero mayor - mayor que - numero menor' entre dos
 	 * numeros enteros, intercambiando los valores de las variables si fuera
 	 * necesario
 	 * 
@@ -285,7 +289,7 @@ public class Utilidades {
 	}
 
 	/**
-	 * Asegura que se cumple una relacion 'numero mayor > numero menor' entre dos
+	 * Asegura que se cumple una relacion 'numero mayor - menor que - numero menor' entre dos
 	 * numeros decimales, intercambiando los valores de las variables si fuera
 	 * necesario
 	 * 

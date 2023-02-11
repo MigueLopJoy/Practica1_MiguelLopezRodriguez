@@ -1,6 +1,5 @@
 package practica1;
 
-
 /**
  * Clase ejecutable del proyecto. Llama al metodo principal de la clase Administrador.
  * 
